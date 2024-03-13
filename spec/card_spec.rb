@@ -2,9 +2,9 @@ require 'Card'
 
 RSpec.describe Card do
   let(:card) {Card.new}
-  describe ".rank" do
-    it "correctly identifies the rank of the card" do
-      expect(card.rank(:Q)).to eq(12)
+  describe ".identity" do
+    it "correctly identifies the rank and number of the card" do
+      expect(card.identity(10,'hearts')).to eq("10 of hearts")
     end
   end
 end
