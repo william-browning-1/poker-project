@@ -17,7 +17,6 @@ class Deck < Card
 
     def shuffle_deck
       @deck.shuffle
-      @deck.length
     end
 
     def random_card
@@ -27,7 +26,5 @@ class Deck < Card
         @hand << @deck[card_1]
         @deck.delete(@deck[card_1])
       end
-      @hand.length
-      @deck.length
     end
 end
