@@ -9,14 +9,21 @@ RSpec.describe Deck do
     end
   end
 
-  describe ".random_card" do
-    it "correct number of cards are dealt" do
-      deck1.random_card
-      expect(deck1.hand.length).to eq(5)
-    end
-    it "Takes cards in hand out of the deck" do
-      deck1.random_card
+  describe ".random_cards" do
+    it "Takes cards in a players hand out of the deck" do
+      deck1.random_cards
       expect(deck1.deck.length).to eq(47)
+    end
+  end
+
+  describe ".deal_cards" do
+    it "deals the correct amount of cards based on the number of players" do
+      deck1.deal_cards(6)
+      expect(deck1.deck.length).to eq(52-30)
+    end
+
+    it "has correct number of hands corresponding to players" do
+      expect(deck1.deal_cards(6).length).to eq(6)
     end
   end
 end
