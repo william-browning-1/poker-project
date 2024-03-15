@@ -10,10 +10,9 @@ RSpec.describe Hand do
   end
   '''
 
-  describe ".strength_of_hand" do
-    it 'compares to hands and determines strength of hand' do
-      expect(hand.strength_of_hand).to eq(0)
+  describe '.new' do
+    it "Replaces face card ranks with corresponding integers" do
+      expect(hand.rank_change).to noteq
     end
   end
-
 end
