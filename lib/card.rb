@@ -1,10 +1,7 @@
 class Card
-  def initilize
-    @suite = suite
+  attr_accessor :rank, :suite
+  def initialize(rank, suite)
     @rank = rank
-  end
-
-  def identity(suite, rank)
-    "#{suite} of #{rank}"
+    @suite = suite
   end
 end

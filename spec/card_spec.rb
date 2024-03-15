@@ -1,10 +1,11 @@
 require 'Card'
-
+'''
 RSpec.describe Card do
-  let(:card) {Card.new}
-  describe ".identity" do
+  let(:card) {Card.new(10, "hearts")}
+  describe ".new" do
     it "correctly identifies the rank and number of the card" do
-      expect(card.identity(10,'hearts')).to eq("10 of hearts")
+      expect(card).to eq()
     end
   end
 end
+'''

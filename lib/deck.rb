@@ -1,7 +1,7 @@
 require_relative 'Card'
 
 class Deck < Card
-    attr_reader :deck, :hand
+    attr_accessor :deck
     def initialize
       @deck = []
       ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'jack', 'queen', 'king', 'ace']
@@ -9,13 +9,10 @@ class Deck < Card
 
       ranks.each do |card_rank|
         suites.each do |card_suite|
-          @deck.push(Card.new.identity(card_rank, card_suite))
+          @deck.push(Card.new(card_rank, card_suite))
         end
       end
-    end
-
-    def shuffle_deck
-      @deck.shuffle
+      @deck = @deck.shuffle  #auto shuffles deck.
     end
 
     def random_cards
@@ -34,5 +31,4 @@ class Deck < Card
       end
       player_hands
     end
-
 end
