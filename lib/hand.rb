@@ -69,6 +69,11 @@ class Hand < Deck
     false
   end
 
+  def is_two_pair?
+    return true if @ranks.uniq.length.eql?(3) and not(is_three_ofak?)
+    false
+  end
+
   def is_three_ofak?
     @ranks.each do |rank|
       if @ranks.count(rank) >= 3

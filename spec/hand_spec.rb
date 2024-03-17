@@ -13,16 +13,21 @@ RSpec.describe Hand do
   Card.new('jack', 'hearts'), Card.new('ace', 'hearts')])}
 
   #(hand1), true for pair and three of a kind, false for flush and straight
-  let(:hand1) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
+  let(:hand1) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'spades'), Card.new(10, 'clubs'),
   Card.new('jack', 'hearts'), Card.new('ace', 'hearts')])}
 
   #(hand2), used for four of a kind true case
-  let(:hand2) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
-  Card.new(10, 'hearts'), Card.new('ace', 'hearts')])}
+  let(:hand2) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'spades'), Card.new(10, 'clubs'),
+  Card.new(10, 'diamonds'), Card.new('ace', 'hearts')])}
 
   #(hand3), used for full house true case
-  let(:hand3) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
-  Card.new('queen', 'hearts'), Card.new('queen', 'hearts')])}
+  let(:hand3) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'spades'), Card.new(10, 'clubs'),
+  Card.new('queen', 'hearts'), Card.new('queen', 'spades')])}
+
+  #(hand4), used for two pair true case
+  let(:hand4) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'spades'), Card.new(9, 'clubs'),
+  Card.new(9, 'hearts'), Card.new('queen', 'spades')])}
+
   #true case
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
@@ -32,7 +37,7 @@ RSpec.describe Hand do
   #false case
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
-      expect(hand1.is_a_flush?).to eq(true)
+      expect(hand1.is_a_flush?).to eq(false)
     end
   end
   #true case
@@ -93,8 +98,6 @@ RSpec.describe Hand do
       expect(hand1.is_a_royal_flush?).to eq(false)
     end
   end
-  let(:hand2) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
-  Card.new(10, 'hearts'), Card.new('ace', 'hearts')])}
   #true case
   describe '.is_four_ofak?' do
     it 'tells if the hand is four of a kind' do
@@ -119,6 +122,20 @@ RSpec.describe Hand do
   describe '.is_full_house?' do
     it 'tells if the hand is four of a kind' do
       expect(hand.is_full_house?).to eq(false)
+    end
+  end
+
+  #true case
+  describe '.is_two_pair?' do
+    it 'tells if the hand is two pairs of a kind' do
+      expect(hand4.is_two_pair?).to eq(true)
+    end
+  end
+
+  #false case
+  describe '.is_two_pair?' do
+    it 'tells if the hand is two pairs of a kind' do
+      expect(hand1.is_two_pair?).to eq(false)
     end
   end
 end
