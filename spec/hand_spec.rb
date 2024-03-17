@@ -5,7 +5,12 @@ RSpec.describe Hand do
   let(:hand_rand) {Hand.new(Deck.new(random_cards))}
   describe '.show_hand' do
     it "Correctly names the card rank and suite" do
-      expect(hand.show_hand).to eq(hand.cards)
+      expect(hand.show_hand).to eq('10 of hearts
+      king of hearts
+      queen of hearts
+      jack of hearts
+      ace of hearts
+')
     end
   end
   #(hand), true for flush and straight, false for pair and three of a kind

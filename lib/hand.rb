@@ -1,13 +1,13 @@
 require_relative 'Deck'
 
 class Hand < Deck
-  attr_accessor :cards, :rank_change
+  attr_accessor :cards, :rank_change, :high_card
   def initialize(cards)
     @cards = cards
-    @ranks = @cards.map{|card| card.rank}
+    @ranks1 = @cards.map{|card| card.rank}
     @suites = @cards.map{|card| card.suite}
 
-    @rank_change = @cards
+    @rank_change = cards
 
     face_cards = {'ace' => 14, 'king' => 13, 'queen' => 12, 'jack' => 11}
 
@@ -19,11 +19,41 @@ class Hand < Deck
 
     @rank_change = @rank_change.select {|card| (card.rank).is_a? Integer}
     @ranks = @rank_change.map{|card| card.rank}
+
+    @high_card = @ranks.max
+
+
   end
 
   def show_hand
-    @cards.each do |card|
-      "#{card.rank} of #{card.suite}"
+    display = []
+    @cards.slice!(0, 5).each do |card|
+      display << "#{card.rank} of #{card.suite}\n"
+    end
+    return display.join('      ')
+  end
+
+  def strength_of_hand?
+    if is_a_royal_flush?
+      strength = 10
+    elsif is_a_straight_flush?
+      strength = 9
+    elsif is_four_ofak?
+      strength = 8
+    elsif is_full_house?
+      strength = 7
+    elsif is_a_flush?
+      strength = 6
+    elsif is_a_straight?
+      strength = 5
+    elsif is_three_ofak?
+      strength = 4
+    elsif is_two_pair?
+      strength = 3
+    elsif is_a_pair?
+      strength = 2
+    else
+      strength = 1
     end
   end
 
@@ -91,6 +121,5 @@ class Hand < Deck
     end
     false
   end
-
 
 end
