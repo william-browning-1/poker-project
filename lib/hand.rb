@@ -30,7 +30,7 @@ class Hand < Deck
     @cards.slice!(0, 5).each do |card|
       display << "#{card.rank} of #{card.suite}\n"
     end
-    return display.join('      ')
+    return display.join('')
   end
 
   def strength_of_hand? #runs all test to find the highest strength the hand has.
