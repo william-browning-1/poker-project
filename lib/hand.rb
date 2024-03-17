@@ -19,8 +19,6 @@ class Hand < Deck
 
     @rank_change = @rank_change.select {|card| (card.rank).is_a? Integer}
 
-
-
      print @rank_change
      @ranks = @rank_change.map{|card| card.rank}
   end
@@ -31,14 +29,23 @@ class Hand < Deck
     end
   end
 
+
+
   def is_a_flush?
-    return false if @suites.uniq.length > 1
-    true
+    return true if @suites.uniq.length.eql?(1)
+    false
   end
 
   def is_a_straight?
-    @ranks.sort!
-    @ranks.each_cons(2).all? {|card_1, card_2| card_2 = card_1 + 1}
+    @ranks = @ranks.sort!
+    cnt_1 = 0
+    @ranks.each_cons(2) do |card_1, card_2|
+      if card_1.eql?(card_2 - 1)
+        cnt_1 += 1
+      end
+    end
+    return false if cnt_1 < 4
+    true
   end
 
   def is_a_pair?
