@@ -29,12 +29,17 @@ class Hand < Deck
     end
   end
 
-  def is_a_flush
-    suites = []
-    @cards.each do |card|
-      suites << card.suite
-    end
+  def is_a_flush?
+    suites = @cards.map{|card| card.suite}
     return false if suites.uniq.length > 1
     true
   end
+
+  def is_a_straight?
+    ranks = @cards.map{|card| card.rank}
+    ranks.sort!
+    ranks.each_cons(2).all? {|card_1, card_2| card_2 = card_1 + 1}
+  end
+
+
 end
