@@ -7,21 +7,22 @@ class Hand < Deck
     @ranks = @cards.map{|card| card.rank}
     @suites = @cards.map{|card| card.suite}
 
-    face_cards = ['ace', 'king', 'queen', 'jack']
-
     @rank_change = @cards
 
+    face_cards = {'ace' => 14, 'king' => 13, 'queen' => 12, 'jack' => 11}
+
     @rank_change.each do |card|
-      if face_cards.include?(card.rank)
-        [0,1,2,3].each do |fc_index|
-          @rank_change[@cards.index(card)] = Card.new(14 - fc_index, card.suite)
-        end
+      if card.rank.is_a? String
+        @rank_change << Card.new(face_cards[card.rank], card.suite)
       end
     end
-    print @rank_change
-    @ranks = @rank_change.map{|card| card.rank}
 
-    puts
+    @rank_change = @rank_change.select {|card| (card.rank).is_a? Integer}
+
+
+
+     print @rank_change
+     @ranks = @rank_change.map{|card| card.rank}
   end
 
   def show_hand
@@ -55,6 +56,7 @@ class Hand < Deck
         return true
       end
     end
+    false
   end
 
 
