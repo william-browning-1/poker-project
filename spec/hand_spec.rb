@@ -61,4 +61,16 @@ RSpec.describe Hand do
       expect(hand.is_three_ofak?).to eq(false)
     end
   end
+  #true case
+  describe '.is_a_st_flush' do
+    it 'tells if the hand is a straght flush' do
+      expect(hand.is_a_st_flush?).to eq(true)
+    end
+  end
+  #false case
+  describe '.is_a_st_flush' do
+    it 'tells if the hand is a straght flush' do
+      expect(hand1.is_a_st_flush?).to eq(false)
+    end
+  end
 end

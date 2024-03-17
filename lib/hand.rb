@@ -31,6 +31,12 @@ class Hand < Deck
 
 
 
+  def is_a_st_flush?
+    return true if is_a_flush? and is_a_straight?
+    false
+  end
+
+
   def is_a_flush?
     return true if @suites.uniq.length.eql?(1)
     false
