@@ -1,7 +1,8 @@
 require 'Hand'
 
 RSpec.describe Hand do
-  let(:hand) {Hand.new(Deck.new(random_cards))}
+  #test case for when the instance can be random
+  let(:hand_rand) {Hand.new(Deck.new(random_cards))}
   describe '.show_hand' do
     it "Correctly names the card rank and suite" do
       expect(hand.show_hand).to eq(hand.cards)
@@ -15,6 +16,13 @@ RSpec.describe Hand do
   let(:hand1) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
   Card.new('jack', 'hearts'), Card.new('ace', 'hearts')])}
 
+  #(hand2), used for four of a kind true case
+  let(:hand2) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
+  Card.new(10, 'hearts'), Card.new('ace', 'hearts')])}
+
+  #(hand3), used for full house true case
+  let(:hand3) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
+  Card.new('queen', 'hearts'), Card.new('queen', 'hearts')])}
   #true case
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
@@ -62,15 +70,55 @@ RSpec.describe Hand do
     end
   end
   #true case
-  describe '.is_a_st_flush' do
+  describe '.is_a_straigth_flush' do
     it 'tells if the hand is a straght flush' do
-      expect(hand.is_a_st_flush?).to eq(true)
+      expect(hand.is_a_straight_flush?).to eq(true)
     end
   end
   #false case
-  describe '.is_a_st_flush' do
+  describe '.is_a_straight_flush' do
     it 'tells if the hand is a straght flush' do
-      expect(hand1.is_a_st_flush?).to eq(false)
+      expect(hand1.is_a_straight_flush?).to eq(false)
+    end
+  end
+  #true case
+  describe '.is_a_royal_flush?' do
+    it 'tells if the hand is a straght flush' do
+      expect(hand.is_a_royal_flush?).to eq(true)
+    end
+  end
+  #false case
+  describe '.is_a_royal_flush?' do
+    it 'tells if the hand is a straght flush' do
+      expect(hand1.is_a_royal_flush?).to eq(false)
+    end
+  end
+  let(:hand2) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'hearts'), Card.new(10, 'hearts'),
+  Card.new(10, 'hearts'), Card.new('ace', 'hearts')])}
+  #true case
+  describe '.is_four_ofak?' do
+    it 'tells if the hand is four of a kind' do
+      expect(hand2.is_four_ofak?).to eq(true)
+    end
+  end
+  #false case
+  describe '.is_four_ofak?' do
+    it 'tells if the hand is four of a kind' do
+      expect(hand.is_four_ofak?).to eq(false)
+    end
+  end
+
+  #true case
+  describe '.is_full_house?' do
+    it 'tells if the hand is four of a kind' do
+      expect(hand3.is_full_house?).to eq(true)
+    end
+  end
+
+  #false case
+  describe '.is_full_house?' do
+    it 'tells if the hand is four of a kind' do
+      expect(hand.is_full_house?).to eq(false)
     end
   end
 end

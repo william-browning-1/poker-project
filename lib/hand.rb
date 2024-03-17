@@ -18,9 +18,7 @@ class Hand < Deck
     end
 
     @rank_change = @rank_change.select {|card| (card.rank).is_a? Integer}
-
-     print @rank_change
-     @ranks = @rank_change.map{|card| card.rank}
+    @ranks = @rank_change.map{|card| card.rank}
   end
 
   def show_hand
@@ -29,9 +27,12 @@ class Hand < Deck
     end
   end
 
+  def is_a_royal_flush?
+    return true if @ranks.sort!.eql?([10, 11, 12, 13, 14]) and is_a_flush?
+    false
+  end
 
-
-  def is_a_st_flush?
+  def is_a_straight_flush?
     return true if is_a_flush? and is_a_straight?
     false
   end
@@ -39,6 +40,11 @@ class Hand < Deck
 
   def is_a_flush?
     return true if @suites.uniq.length.eql?(1)
+    false
+  end
+
+  def is_full_house?
+    return true if @ranks.uniq.length.eql?(2)
     false
   end
 
@@ -66,6 +72,15 @@ class Hand < Deck
   def is_three_ofak?
     @ranks.each do |rank|
       if @ranks.count(rank) >= 3
+        return true
+      end
+    end
+    false
+  end
+
+  def is_four_ofak?
+    @ranks.each do |rank|
+      if @ranks.count(rank) == 4
         return true
       end
     end
