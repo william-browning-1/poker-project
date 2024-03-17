@@ -10,6 +10,7 @@ RSpec.describe Hand do
 
   let(:hand) {Hand.new([Card.new(10, 'hearts'), Card.new(9, 'hearts'), Card.new(8, 'hearts'),
               Card.new(7, 'hearts'), Card.new(6, 'hearts')])}
+
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
       expect(hand.is_a_flush?).to eq(true)
@@ -19,6 +20,21 @@ RSpec.describe Hand do
   describe '.is_a_straight' do
     it "Responds with a boolean based on if the values are a straight" do
       expect(hand.is_a_straight?).to eq(true)
+    end
+  end
+
+  let(:hand) {Hand.new([Card.new('ace', 'hearts'), Card.new('ace', 'hearts'), Card.new(4, 'hearts'),
+  Card.new(7, 'hearts'), Card.new(6, 'hearts')])}
+
+  describe '.is_a_pair?' do
+    it "tells if their is a pair in the hand" do
+      expect(hand.is_a_pair?).to eq(true)
+    end
+  end
+
+  describe '.is_three_ofak?' do
+    it "tells if their is three of a kind in the hand" do
+      expect(hand.is_three_ofak?).to eq(true)
     end
   end
 end
