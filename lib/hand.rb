@@ -23,11 +23,6 @@ class Hand < Deck
     '''
   end
 
-  def to_s
-    @cards.each do |card|
-      "#{card.rank} of #{card.suite}"
-    end
-  end
   def show_hand
     @cards.each do |card|
       "#{card.rank} of #{card.suite}"
@@ -35,8 +30,11 @@ class Hand < Deck
   end
 
   def is_a_flush
-    suits = @cards.select{|card| card.suit}
-    return False if suits.uniq.lenght > 1
-    True
+    suites = []
+    @cards.each do |card|
+      suites << card.suite
+    end
+    return false if suites.uniq.length > 1
+    true
   end
 end
