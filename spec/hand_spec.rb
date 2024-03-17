@@ -1,18 +1,5 @@
 require 'Hand'
-
 RSpec.describe Hand do
-  #test case for when the instance can be random
-  let(:hand_rand) {Hand.new(Deck.new(random_cards))}
-  describe '.show_hand' do
-    it "Correctly names the card rank and suite" do
-      expect(hand.show_hand).to eq('10 of hearts
-      king of hearts
-      queen of hearts
-      jack of hearts
-      ace of hearts
-')
-    end
-  end
   #(hand), true for flush and straight, false for pair and three of a kind
   let(:hand) {Hand.new([Card.new(10, 'hearts'), Card.new('king', 'hearts'), Card.new('queen', 'hearts'),
   Card.new('jack', 'hearts'), Card.new('ace', 'hearts')])}
@@ -33,6 +20,21 @@ RSpec.describe Hand do
   let(:hand4) {Hand.new([Card.new(10, 'hearts'), Card.new(10, 'spades'), Card.new(9, 'clubs'),
   Card.new(9, 'hearts'), Card.new('queen', 'spades')])}
 
+  #(hand5), used for two pair true case
+  let(:hand5) {Hand.new([Card.new('ace', 'hearts'), Card.new(6, 'spades'), Card.new(2, 'clubs'),
+  Card.new(5, 'hearts'), Card.new('queen', 'spades')])}
+
+
+  describe '.show_hand' do
+    it "Correctly names the card rank and suite" do
+      expect(hand.show_hand).to eq('10 of hearts
+      king of hearts
+      queen of hearts
+      jack of hearts
+      ace of hearts
+')
+    end
+  end
   #true case
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
@@ -143,4 +145,19 @@ RSpec.describe Hand do
       expect(hand1.is_two_pair?).to eq(false)
     end
   end
+
+  #strength of hand test cases
+
+  describe '.strength_of_hand' do
+    it 'determines strength of hand using numerical value' do
+      expect(hand.strength_of_hand?).to eq(10) #royal flush case
+    end
+  end
+
+  describe '.strength_of_hand' do
+    it 'returns high card when all other values are false' do
+      expect(hand5.strength_of_hand?).to eq(1) #none of the functions pass.
+    end
+  end
+
 end
