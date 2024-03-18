@@ -1,9 +1,13 @@
 require_relative 'Hand'
 
 class Player < Hand
-  def initialize(hand)
-    @chips = 10000
-    @hand = hand
-    @strength = @hand.strength_of_hand?
+  attr_accessor :chips
+  def initialize(chips)
+    @chips = chips
+
+  end
+
+  def new_hand(hand)
+    @hand = Hand.new(hand)
   end
 end

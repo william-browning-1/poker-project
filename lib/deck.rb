@@ -1,4 +1,5 @@
 require_relative 'Card'
+require_relative 'Player'
 
 class Deck < Card
     attr_accessor :deck
@@ -17,6 +18,7 @@ class Deck < Card
 
     def random_cards
       hand = @deck.take(5)
+      @deck = @deck - hand
       hand
     end
 end
