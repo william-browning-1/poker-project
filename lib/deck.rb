@@ -16,11 +16,7 @@ class Deck < Card
     end
 
     def random_cards
-      hand = []
-      [0,1,2,3,4].each do |card|
-        hand << @deck[card]
-        @deck.delete(@deck[0])
-      end
+      hand = @deck.take(5)
       hand
     end
 end

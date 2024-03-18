@@ -4,10 +4,13 @@ class Hand < Deck
   attr_accessor :cards, :rank_change, :high_card
   def initialize(cards)
     @cards = cards
-    @ranks1 = @cards.map{|card| card.rank}
-    @suites = @cards.map{|card| card.suite}
+    if @cards.eql?(nil)
 
-    @rank_change = cards
+    else
+      @ranks1 = @cards.map{|card| card.rank}
+      @suites = @cards.map{|card| card.suite}
+
+      @rank_change = cards
 
     face_cards = {'ace' => 14, 'king' => 13, 'queen' => 12, 'jack' => 11}
 
@@ -21,8 +24,7 @@ class Hand < Deck
     @ranks = @rank_change.map{|card| card.rank}
 
     @high_card = @ranks.max
-
-
+    end
   end
 
   def show_hand
