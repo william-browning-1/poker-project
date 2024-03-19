@@ -1,6 +1,6 @@
 require_relative 'Deck'
 
-class Hand
+class Hand < Deck
   attr_accessor :cards, :rank_change, :high_card
   def initialize(cards)
     @cards = cards

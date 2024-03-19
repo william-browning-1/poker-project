@@ -1,5 +1,4 @@
 require_relative 'Card'
-require_relative 'Player'
 
 class Deck < Card
     attr_accessor :deck
