@@ -1,5 +1,7 @@
 require_relative 'Hand'
 
+$players = []
+
 class Player < Hand
   attr_accessor :chips, :hand
   def initialize(chips)
@@ -10,14 +12,14 @@ class Player < Hand
     @hand = Hand.new(hand)
   end
 
-  def fold
-    puts "Folds"
-    # $players.delete(@hand)
+
+
+  def fold(player)
+    player.hand = nil
   end
 
   def sees_bet
-    puts "Calls"
-  end
 
+  end
 
 end
