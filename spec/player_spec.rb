@@ -17,9 +17,14 @@ RSpec.describe Player do
     end
   end
 
-  describe '.see_bet' do
-    it 'adds current bet to the overall pot then takes that bet amount out of the players chips' do
-      expect(player1.sees_bet(4000).chips).to eq(6000)
+  describe '.raise_bet' do
+    $current_bet = 20
+    it 'Value must be greater than current bet when raising a bet' do
+      expect(player1.raise_bet(25)).to eq(25) #function returns bet when it is greater than 20
+    end
+
+    it 'Returns message when the value isnt greater than current_bet' do
+      expect(player1.raise_bet(20)).to match("A raised bet must be above the current bet")
     end
   end
 end
