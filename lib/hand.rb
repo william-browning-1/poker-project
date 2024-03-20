@@ -5,7 +5,7 @@ class Hand < Deck
   def initialize(cards)
     @cards = cards
     @ranks1 = @cards.map{|card| card.rank}
-    @suites = @cards.map{|card| card.suite}
+    @suits = @cards.map{|card| card.suit}
 
     @rank_change = cards
 
@@ -13,7 +13,7 @@ class Hand < Deck
 
     @rank_change.each do |card|
       if card.rank.is_a? String
-        @rank_change << Card.new(face_cards[card.rank], card.suite)
+        @rank_change << Card.new(face_cards[card.rank], card.suit)
       end
     end
 
@@ -26,7 +26,7 @@ class Hand < Deck
   def show_hand
     display = []
     @cards.slice!(0, 5).each do |card|
-      display << "#{card.rank} of #{card.suite}\n"
+      display << "#{card.rank} of #{card.suit}\n"
     end
     return display.join('')
   end
@@ -68,7 +68,7 @@ class Hand < Deck
 
 
   def is_a_flush?
-    return true if @suites.uniq.length.eql?(1) #only 1 unique suite is a flush
+    return true if @suits.uniq.length.eql?(1) #only 1 unique suite is a flush
     false
   end
 

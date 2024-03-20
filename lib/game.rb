@@ -5,12 +5,14 @@ class Game < Player
   def initialize
     puts "Welcome to Poker! How many players are there?"
     $num_players = gets.chomp.to_i
-    puts "What would you like each player's starting chips to be?"
-    @chip_count = gets.chomp.to_i
-    puts "Initializing Players"
+    puts "\nInitializing Players...\n\n"
+
+    puts "\n Each player starts with 100 chips"
+
+
 
     (0...$num_players).each do |player|
-      $players << Player.new(@chip_count)
+      $players << Player.new(100, player + 1)
     end
     single_round
   end
@@ -31,25 +33,26 @@ class Game < Player
   end
 
   def player_turns
-    i = 0
+    $pot = 30
+    $current_bet = 20
     $players.each do |player|  #run each players turn.
-      i += 1
-      puts "\nPlayer \##{i}"
-      puts player.hand.show_hand
-      puts "\n1)See, 2)Raise, or 3)Fold"
-      choice = gets.chomp.to_i
-      if choice == 1
-        sees_bet
-      elsif choice == 2
-        puts "How much would you like to raise?"
-        curr_raise = gets.chomp.to_i
-        raise_bet(curr_raise)
-      elsif choice == 3
-        puts "\nPlayer \##{i} Folds..."
-        fold(player)
-        if player.hand.eql?(nil)
-          player = Player.new(player.chips)
-        end
+      while player.hand != nil
+          puts "\\n #{player.id}"
+          puts player.hand.show_hand
+          puts "\n1)See, 2)Raise, or 3)Fold"
+          choice = gets.chomp.to_i
+        if choice == 1
+          puts "\\n #{player.id}} Sees Bet..."
+          sees_bet
+        elsif choice == 2
+          puts "How much would you like to raise?"
+          curr_raise = gets.chomp.to_i
+          raise_bet(curr_raise)
+          $players << Player.new(player.chips, player.id).new_hand(player.hand)
+        elsif choice == 3
+          puts "\\n #{player.id} Folds..."
+          player = Player.new(player.chips, player.id) #saves playerid and chips but removes hand
+      end
       end
     end
   end

@@ -5,11 +5,11 @@ class Deck < Card
     def initialize
       @deck = []
       ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, 'jack', 'queen', 'king', 'ace']
-      suites = ['hearts', 'clubs', 'spades', 'diamonds']
+      suits = ['hearts', 'clubs', 'spades', 'diamonds']
 
       ranks.each do |card_rank|  #makes deck
-        suites.each do |card_suite|
-          @deck.push(Card.new(card_rank, card_suite))
+        suits.each do |card_suit|
+          @deck.push(Card.new(card_rank, card_suit))
         end
       end
       @deck = @deck.shuffle! #auto shuffles deck.
