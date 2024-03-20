@@ -7,54 +7,59 @@ class Game < Player
     $num_players = gets.chomp.to_i
     puts "\nInitializing Players...\n\n"
 
-    puts "\n Each player starts with 100 chips"
+    puts "Each player starts with 100 chips\n\n"
 
 
 
     (0...$num_players).each do |player|
       $players << Player.new(100, player + 1)
     end
+
+    @player_save = []
     single_round
   end
 
   def single_round
     puts "\nShuffling...
     "
-    @current_deck = Deck.new
-    puts "\nDealing...\n"
-    distribute_cards
-  end
+    @current_deck = Deck.new #new deck for every round
+    puts "\nDealing...\n\n"
 
-  def distribute_cards
-    $players.each do |player|
+    $players.each do |player|  #distributes hands
       player.new_hand(@current_deck.random_cards)
     end
-    player_turns
-  end
 
-  def player_turns
-    $pot = 30
-    $current_bet = 20
+    $pot = 0
+
+    $players.each do |player| #create ante game based on number of players
+      $pot += 10
+      player.chips = player.chips - 10
+    end
+
+    $current_bet = $pot
+
     $players.each do |player|  #run each players turn.
-      #while player.hand != nil #while they havent folded
-          puts "\n #{player.id}"
+          puts "#{player.id}\n\n"
           puts player.hand.show_hand
+
           puts "\n1)See, 2)Raise, or 3)Fold"
           choice = gets.chomp.to_i
         if choice == 1
-          puts "\\n #{player.id}} Sees Bet..."
+          puts "#{player.id} Sees Bet..."
           sees_bet($current_bet)
-          # $players << Player.new(player.chips, player.id).new_hand(player.hand)
+
+          player.chips = player.chips - $current_bet
         elsif choice == 2
           puts "How much would you like to raise?"
           curr_raise = gets.chomp.to_i
-          raise_bet(curr_raise)
-          # $players << Player.new(player.chips, player.id).new_hand(player.hand)
+
+          raise_bet(curr_raise, player.id)
+          player.chips = player.chips - $current_bet
         elsif choice == 3
-          puts "#{player.id} Folds...\n"
-          player = Player.new(player.chips, player.id) #saves playerid and chips but removes hand
-      #end
-      end
+          puts "#{player.id} Folds...\n\n"
+          @player_save << Player.new(player.chips, player.id) #saves playerid and chips but removes hand
+          $players.delete(player)
+        end
     end
   end
 end

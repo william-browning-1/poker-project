@@ -18,14 +18,12 @@ class Player < Hand
   end
 
   def sees_bet(bet)
-    puts bet
+    $pot = $pot + bet
   end
 
-  def raise_bet(bet)
-    unless bet > $current_bet
-      "A raised bet must be above the current bet"
-    else
-      bet
-    end
+  def raise_bet(bet, playerid)
+    $current_bet = bet + $current_bet
+    puts "#{playerid} raises the bet to #{$current_bet}\n\n"
+    $current_bet
   end
 end
