@@ -6,7 +6,7 @@ class Player < Hand
   attr_accessor :chips, :hand, :id
   def initialize(chips, id)
     @chips = chips
-    @id = "Player #{id}"
+    @id = id
   end
 
   def new_hand(hand)
@@ -23,7 +23,9 @@ class Player < Hand
 
   def raise_bet(bet, playerid)
     $current_bet = bet + $current_bet
+    $pot = $current_bet + $pot
     puts "#{playerid} raises the bet to #{$current_bet}\n\n"
     $current_bet
   end
+
 end
