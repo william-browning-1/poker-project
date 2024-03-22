@@ -10,21 +10,16 @@ class Player < Hand
     @hand = hand
   end
 
-  def test_hand(hand)
-    @hand = Hand.new(hand)
-  end
-
-
   def turn(player)
     if player.hand != nil
       puts "Player #{player.id}'s Turn\n\n"
+      puts Hand.new(player.hand).show_hand
 
       puts "\n1)See, 2)Raise, or 3)Fold?"
       choice = gets.chomp.to_i
       if choice == 1
         @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 2
-        puts player.hand.show_hand
         @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 3
         @players << Player.new(player.chips, player.id, nil)
