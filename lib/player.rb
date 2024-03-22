@@ -20,6 +20,23 @@ class Player < Hand
       if choice == 1
         @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 2
+        loop do
+          puts "\nHow much would you like to raise?"
+          choice = gets.chomp.to_i
+          begin
+            choice = Integer(choice)
+            if 0 < choice
+              puts "Adding Raise to the Current Bet"
+              break
+            elsif choice < player.hand
+              puts "You Don't have enough chips/n/nTry Again"
+            else
+              puts "Value is not an Integer\n\nTry Again"
+            end
+          end
+
+
+        end
         @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 3
         @players << Player.new(player.chips, player.id, nil)
