@@ -12,10 +12,9 @@ class Game < Player
 
     @players = []
     (0...$num_players).each do |player|
-      @players << Player.new(100, player + 1)
+      @players << Player.new(100, player + 1, nil) #hand starts as a nil value.
     end
 
-    @player_save = []
     start_round
   end
 
@@ -25,15 +24,23 @@ class Game < Player
     puts "\nDealing...\n\n"
 
     @players.each do |player|  #distributes hands
-      player.new_hand(@current_deck.random_cards)
+      puts player.hand
+      player.hand = @current_deck.random_cards
     end
 
-    $pot = 0
+    @pot = 0
 
     puts "Initial Bets are 10 chips each:\n"
     @players.each do |player| #create ante game based on number of players
-      $pot += 10
-      player.chips = player.chips - 10
+      @pot += 10
+    end
+    @current_bet = @pot
+    puts "Starting bet is #{@current_bet}\n"
+
+    @players.each do |player|
+      if player.hand != nil
+        turn(player)
+      end
     end
   end
 end

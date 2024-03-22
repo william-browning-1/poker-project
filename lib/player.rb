@@ -4,63 +4,36 @@ $players = []
 
 class Player < Hand
   attr_accessor :chips, :hand, :id
-  def initialize(chips, id)
+  def initialize(chips, id, hand)
     @chips = chips
     @id = id
+    @hand = hand
   end
 
-  def new_hand(hand)
+  def test_hand(hand)
     @hand = Hand.new(hand)
   end
 
 
-  def turns
-
-    @current_bet = @pot
-    puts "Starting bet is #{$current_bet}\n"
-
-    @players.each do |player|  #run each players turn.
+  def turn(player)
+    if player.hand != nil
       puts "Player #{player.id}'s Turn\n\n"
-      puts player.hand.show_hand
 
       puts "\n1)See, 2)Raise, or 3)Fold?"
       choice = gets.chomp.to_i
-      choices = [1,2,3]
-      while (choices.include?(choice)).eql?(false)
-          puts "Invalid Input\n1)See, 2)Raise, or 3)Fold?"
-          choice = gets.chomp.to_i
-      end
-
       if choice == 1
-
-        sees_bet($current_bet)
-        if player.chips > $current_bet
-          puts "Player #{player.id} Sees Bet..."
-          player.chips = player.chips - $current_bet
-          puts "Player #{player.id}'s Remaining Chips: #{player.chips}\n"
-        else
-          puts "Player #{player.id} is All In!"
-        end
-
+        @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 2
-        puts "How much would you like to raise?"
-        curr_raise = gets.chomp.to_i
-        raise_bet(curr_raise, player.id)
-
-        if player.chips > $current_bet
-            player.chips = player.chips - $current_bet
-        else
-            puts "Player #{player.id} is All In!"
-        end
-            puts "Player #{player.id}'s Remaining Chips: #{player.chips}\n"
+        puts player.hand.show_hand
+        @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 3
-        puts "Player #{player.id} Folds...\n\n"
-        @player_save << Player.new(player.chips, player.id) #saves playerid and chips but removes hand
-        @players.delete(player)
+        @players << Player.new(player.chips, player.id, nil)
       end
     end
-    elminate
-    save_players
+
+    #elminate
+
+    #save_players
   end
 
   def save_player                   #saves players whos still are in the game,

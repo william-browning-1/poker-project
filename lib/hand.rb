@@ -4,6 +4,14 @@ class Hand < Deck
   attr_accessor :cards, :rank_change, :high_card
   def initialize(cards)
     @cards = cards
+
+    @cards.each do |card|
+      if is_a? Integer
+        if card.rank > 10
+          @card.delete(card)
+        end
+      end
+    end
     @ranks1 = @cards.map{|card| card.rank}
     @suits = @cards.map{|card| card.suit}
 
