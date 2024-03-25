@@ -14,9 +14,4 @@ RSpec.describe Player do
       expect(player1.hand).to eq(nil)
     end
   end
-
-  describe '.turns(player)' do
-    it 'change the chips of the player when starting the initial bets'
-  end
-
 end
