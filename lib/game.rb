@@ -33,6 +33,7 @@ class Game < Player
     puts "Initial Bets are 10 chips each:\n"
     @players.each do |player| #create ante game based on number of players
       @pot += 10
+      player.chips = player.chips - 10
     end
     @current_bet = @pot
     puts "Starting bet is #{@current_bet}\n"
@@ -51,5 +52,3 @@ class Game < Player
     end
   end
 end
-
-game_1 = Game.new

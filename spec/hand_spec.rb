@@ -24,18 +24,18 @@ RSpec.describe Hand do
   let(:hand5) {Hand.new([Card.new('ace', 'hearts'), Card.new(6, 'spades'), Card.new(2, 'clubs'),
   Card.new(5, 'hearts'), Card.new('queen', 'spades')])}
 
-''' commenting this out because of formatting issues
-  describe \'.show_hand\' do
+
+  describe '.show_hand' do
     it "Correctly names the card rank and suite" do
-      expect(hand.show_hand).to eq(\'10 of hearts
-      king of hearts
-      queen of hearts
-      jack of hearts
-      ace of hearts
-\')
+      expect(hand.show_hand).to eq('10 of hearts
+king of hearts
+queen of hearts
+jack of hearts
+ace of hearts
+')
     end
   end
-'''
+
   #true case
   describe '.is_a_flush' do
     it "Responds with a boolean based on if the values are a flush" do
