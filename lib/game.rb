@@ -25,7 +25,7 @@ class Game < Player
 
     @players.each do |player|  #distributes hands
       puts player.hand
-      player.hand = @current_deck.random_cards
+      player.hand = @current_deck.random_cards(5)
     end
 
     @pot = 0
@@ -37,9 +37,16 @@ class Game < Player
     @current_bet = @pot
     puts "Starting bet is #{@current_bet}\n"
 
+    player_turns = 0
     @players.each do |player|
-      if player.hand != nil
+      if player_turns == @players.length * 2
+        puts "\nDraw Hand"
+        player.discard?
         turn(player)
+      elif player.hand != nil
+        puts "\nFirst Hand"
+        turn(player)
+        player_turns +=1
       end
     end
   end

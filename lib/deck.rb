@@ -15,8 +15,8 @@ class Deck < Card
       @deck = @deck.shuffle! #auto shuffles deck.
     end
 
-    def random_cards
-      hand = @deck.take(5)
+    def random_cards(num_cards)
+      hand = @deck.take(num_cards)
       @deck = @deck - hand
       hand
     end
