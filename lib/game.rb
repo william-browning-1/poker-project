@@ -44,11 +44,11 @@ class Game < Player
     @player_turns = 0
     @players.each do |player|
       if player.hand != nil
-        if @player_turns <= @num_players
+        if @player_turns < @num_players
           puts "(First Round)"
           turn(player)
           @player_turns += 1
-        elsif @player_turns < @num_players * 2
+        elsif @player_turns >= @num_players
           puts "(Draw Round)"
           turn(player)
           @player_turns += 1

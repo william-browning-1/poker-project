@@ -12,9 +12,10 @@ class Player < Hand
 
   def turn(player)
     puts "Player #{player.id}'s Turn:\n\n"
-    puts Hand.new(player.hand).show_hand
-    if @player_turns < @num_players * 2
-      draw_hand
+    if @player_turns >= @num_players
+      draw_hand(player)
+    else
+      puts Hand.new(player.hand).show_hand
     end
 
     puts "\n1)See, 2)Raise, or 3)Fold?"
@@ -51,7 +52,9 @@ Try Again"
       end
   end
 
-  def draw_hand
+  def draw_hand(player)
     puts Hand.new(player.hand).show_hand
+
+
   end
 end
