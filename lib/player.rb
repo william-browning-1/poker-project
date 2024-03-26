@@ -13,7 +13,7 @@ class Player < Hand
   def turn(player)
     puts "Player #{player.id}'s Turn:\n\n"
     if @player_turns >= @num_players
-      draw_hand(player)
+      draw_hand(player, @current_deck)
     else
       puts Hand.new(player.hand).show_hand
     end
@@ -52,9 +52,36 @@ Try Again"
       end
   end
 
-  def draw_hand(player)
-    puts Hand.new(player.hand).show_hand
+  def draw_hand(player, current_deck)
+      show_hand_draw(player)
+      puts "\nWhich cards would you like to discard? (e.g., 1 3 5; maximum of 3 cards)"
 
+      choices = gets.chomp.split.map(&:to_i)
+      while !choices.all? { |choice| (1..5).include?(choice) } || choices.length > 3
+        puts "Invalid input! Please enter the numbers of up to three cards to discard: "
+        choices = gets.chomp.split.map(&:to_i)
+      end
 
+      choices.sort.reverse.each do |index|
+        player.hand.delete_at(index - 1)
+      end
+
+      discarded_count = choices.length
+      player.hand.concat(@current_deck.random_cards(discarded_count))
+
+      puts 'Current hand:'
+      puts Hand.new(player.hand).show_hand
+  end
+
+  def show_hand_draw(player)
+    puts "Current Hand:"
+    player.hand = player.hand.select {|card| card.rank.is_a? String or card.rank <= 10}
+    display = []
+    index = 1
+    player.hand.slice!(0, 5).each do |card|
+      display << "#{index}) #{card.rank} of #{card.suit}\n"
+      index += 1
+    end
+    puts display.join('')
   end
 end

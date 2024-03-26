@@ -1,7 +1,7 @@
 require_relative 'Player'
 
 class Game < Player
-  attr_accessor :num_players
+  attr_accessor :num_players, :current_deck, :players
   def initialize
     puts "Welcome to Poker! How many players are there?"
     @num_players = gets.chomp.to_i
