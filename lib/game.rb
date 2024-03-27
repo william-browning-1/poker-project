@@ -5,14 +5,21 @@ class Game < Player
   def initialize
     puts "Welcome to Poker! How many players are there?"
     @num_players = gets.chomp.to_i
+
+    while !@num_players.between?(2,6)
+      puts "Value Error: must be 2-6 players,
+Try Again:"
+      @num_players = gets.chomp.to_i
+    end
+
     puts "\nInitializing Players...\n\n"
 
-    puts "Each player starts with 100 chips\n\n"
+    puts "Each player starts with 200 chips\n\n"
 
 
     @players = []
     (0...@num_players).each do |player|
-      @players.push(Player.new(100, player + 1, nil)) #hand starts as a nil value.
+      @players.push(Player.new(200, player + 1, nil)) #hand starts as a nil value.
     end
 
     length = @players.length
