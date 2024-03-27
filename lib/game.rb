@@ -23,7 +23,6 @@ Try Again:"
     end
 
     length = @players.length
-    puts length
 
     start_round
   end
@@ -66,5 +65,3 @@ Try Again:"
     end
   end
 end
-
-game_1 = Game.new
