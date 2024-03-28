@@ -1,7 +1,5 @@
 require_relative 'Hand'
 
-$players = []
-
 class Player < Hand
   attr_accessor :chips, :hand, :id
   def initialize(chips, id, hand)
@@ -11,7 +9,7 @@ class Player < Hand
   end
 
   def turn(player)
-    puts "Player #{player.id}'s Turn:\n\n"
+    puts "Player #{player.id}'s Turn:\n Chip Count: #{player.chips}\n"
     if @player_turns >= @num_players
       new_cards = draw_hand(player, @current_deck)
       puts 'Current hand:'
@@ -20,11 +18,12 @@ class Player < Hand
     else
       puts Hand.new(player.hand).show_hand
     end
+    puts "#{}"
 
     puts "\n1)See, 2)Raise, or 3)Fold?"
     choice = gets.chomp.to_i
       if choice == 1
-        @players << Player.new(player.chips, player.id, player.hand)
+        @players << Player.new(player.chips - @current_bet, player.id, player.hand)
       elsif choice == 2 #if player raises raise the inputed value.
         loop do
           puts "\nHow much would you like to raise?"
@@ -34,6 +33,7 @@ class Player < Hand
             if choice.between?(1, player.chips)
               puts "Adding Raise to the Current Bet"
               @current_bet += choice #updates current bet
+              @players << Player.new(player.chips - @current_bet, player.id, player.hand)
               @pot += @current_bet #updates pot
               puts "Pot is #{@pot},
 Current Bet is #{@current_bet}"
@@ -49,7 +49,6 @@ Try Again"
             end
           end
         end
-        @players << Player.new(player.chips, player.id, player.hand)
       elsif choice == 3 #if player folds give them a nil hand.
         @players << Player.new(player.chips, player.id, nil)
       end

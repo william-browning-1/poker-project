@@ -27,6 +27,10 @@ Try Again:"
     start_round
   end
 
+  def eliminate(player)
+    @players.delete(player)
+  end
+
   def start_round
     puts "\nShuffling..."
     @current_deck = Deck.new #new deck for every round
@@ -55,7 +59,7 @@ Try Again:"
           turn(player)
           @player_turns += 1
         elsif @player_turns >= @num_players
-          puts "(Draw Round)"
+          puts "(Draw Round)\n"
           turn(player)
           @player_turns += 1
         else
@@ -65,3 +69,4 @@ Try Again:"
     end
   end
 end
+game_1 = Game.new
