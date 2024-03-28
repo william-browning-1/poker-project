@@ -55,7 +55,7 @@ Try Again:"
     @players.each do |player|
       if player.hand != nil
         if @player_turns < @num_players
-          puts "(First Round)"
+          puts "(First Round)\n"
           turn(player)
           @player_turns += 1
         elsif @player_turns >= @num_players
