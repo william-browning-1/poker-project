@@ -14,9 +14,10 @@ RSpec.describe Player do
       expect(player1.hand).to eq(nil)
     end
   end
+
   describe 'eliminate' do
     it 'eliminates a player when they have 0 chips' do
-      expect(@players.include(Player(0, 1, nil))).to eql?(false)
+      expect(@players.include(Player.new(0, 1, nil))).to eql?(false)
     end
   end
 end

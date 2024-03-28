@@ -9,55 +9,75 @@ class Player < Hand
   end
 
   def turn(player)
-    puts "Player #{player.id}'s Turn:\n Chip Count: #{player.chips}\n"
+    puts "Player #{player.id}'s Turn:\n\nChip Count: #{player.chips}\n\n"
     if @player_turns >= @num_players
       new_cards = draw_hand(player, @current_deck)
-      puts 'Current hand:'
+      puts "Current hand:\n"
       player.hand.concat(new_cards)
       puts Hand.new(player.hand).show_hand
     else
       puts Hand.new(player.hand).show_hand
     end
-    puts "#{}"
-
-    puts "\n1)See, 2)Raise, or 3)Fold?"
-    choice = gets.chomp.to_i
-      if choice == 1
-        @players << Player.new(player.chips - @current_bet, player.id, player.hand)
-      elsif choice == 2 #if player raises raise the inputed value.
-        loop do
-          puts "\nHow much would you like to raise?"
-          choice = gets.chomp.to_i
-          begin
-            choice = Integer(choice)
-            if choice.between?(1, player.chips)
-              puts "Adding Raise to the Current Bet"
-              @current_bet += choice #updates current bet
-              @players << Player.new(player.chips - @current_bet, player.id, player.hand)
-              @pot += @current_bet #updates pot
-              puts "Pot is #{@pot},
-Current Bet is #{@current_bet}"
+    loop do
+      puts "\n1)See, 2)Raise, or 3)Fold?"
+      choice = gets.chomp.to_i
+      begin
+        choice.between?(1, 3)
+          if choice == 1
+            @players << Player.new(player.chips - @current_bet, player.id, player.hand)
+            all_in?(player)
+            break
+          elsif choice == 2 #if player raises raise the inputed value.
+            loop do
+              puts "\nHow much would you like to raise?\n"
+              choice = gets.chomp.to_i
+              begin
+                choice = Integer(choice)
+                if choice.between?(1, player.chips)
+                  puts "\nAdding Raise to the Current Bet\n"
+                  @current_bet += choice #updates current bet
+                  all_in?(player.chips - @current_bet, player)
+                  @players << Player.new(player.chips - @current_bet, player.id, player.hand)
+                  @pot += @current_bet #updates pot
+                  puts "Pot is #{@pot},
+    Current Bet is #{@current_bet}"
+                  break
+                elsif choice > player.chips
+                  puts "You Don't have enough chips
+    Try Again"
+                  puts "Pot is #{@pot},
+    Current Bet is #{@current_bet}"
+                else
+                  puts "Value is not a Positive Integer
+    Try Again"
+                end
+              end
               break
-            elsif choice > player.chips
-              puts "You Don't have enough chips
-Try Again"
-              puts "Pot is #{@pot},
-Current Bet is #{@current_bet}"
-            else
-              puts "Value is not a Positive Integer
-Try Again"
             end
+          elsif choice == 3 #if player folds give them a nil hand.
+            @players << Player.new(player.chips, player.id, nil)
+            break
+          else
+            puts "Invalid Input, Try Again"
           end
-        end
-      elsif choice == 3 #if player folds give them a nil hand.
-        @players << Player.new(player.chips, player.id, nil)
+       end
       end
   end
+
+  def all_in?(val, player)
+    if val <= 0
+      puts "Player #{player.id} is ALL IN!"
+      @player_save = Player.new(0, player.id, player.hand)
+      @players.delete(player)
+    end
+  end
+
+
 
   def draw_hand(player, current_deck)
     puts "Current hand: "
     puts Hand.new(player.hand).show_hand
-    puts "\nWhich cards would you like to discard? (e.g., 1 3 5)"
+    puts "\nWhich cards would you like to discard? \"Enter\" to skip. (e.g., 1 3 5)"
 
     choices = gets.chomp.split.map(&:to_i)
     while !choices.all? { |choice| (1..5).include?(choice) } || choices.length > 3
