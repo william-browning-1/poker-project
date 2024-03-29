@@ -11,14 +11,15 @@ class Player < Hand
   def turn(player)
     if player.chips <=0
       puts "Player #{player.id} is All IN!!"
+      @players << Player.new(0, player.id, player.hand) #saves hand but makes chip count 0.
     else
       puts "Player #{player.id}'s Turn:\n\nChip Count: #{player.chips}\n\n"
-      if @player_turns >= @num_players
+      if @player_turns.between?(@num_players, (@count * 2) - 1) #draw round
         new_cards = draw_hand(player, @current_deck)
         puts "Current hand:\n"
         player.hand.concat(new_cards)
         puts Hand.new(player.hand).show_hand
-      else
+      else #first round, final round
         puts Hand.new(player.hand).show_hand
       end
       see_raise_fold(player)
@@ -31,7 +32,7 @@ class Player < Hand
       choice = gets.chomp.to_i
       begin
         if choice == 1 #sees bet
-          @players << Player.new(player.chips - @current_bet, player.id, player.hand)
+          @players << Player.new(player.chips - @current_bet, player.id, player.hand) #used to continue iterating
           break
         elsif choice == 2 #if player raises raise the inputed value.
           loop do
@@ -57,6 +58,7 @@ class Player < Hand
           break
         elsif choice == 3 #if player folds give them a nil hand.
           @players << Player.new(player.chips, player.id, nil)
+          @count -= 1
           break
         else
           puts "Invalid Input, \nTry Again"
