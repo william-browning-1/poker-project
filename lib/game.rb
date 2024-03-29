@@ -27,7 +27,7 @@ Try Again:"
     @player_save = []
   end
 
-  def find_last_instance
+  def find_last_instance  #finds the last time a value was entered for a player.id in @players
     @player_save = []
     last_instances = {}
     @players.reverse.each do |player|
@@ -35,18 +35,17 @@ Try Again:"
         last_instances[player.id] = { chips: player.chips, id: player.id }
       end
     end
+    puts last_instances
     last_instances.values.each do |player|
-      @player_save << Player.new(chips, id, nil)
+      @player_save << Player.new(player[:chips], player[:id], nil)
     end
-    puts @player_save
+    @player_save
   end
 
   def start_round
-    find_last_instance
     puts "\nShuffling..."
     @current_deck = Deck.new #new deck for every round
-    puts "\nDealing...\n\n"
-
+    puts "\nDealing...\n\n" #changes @players back to three players.
     @players.each do |player|  #distributes hands
       player.hand = @current_deck.random_cards(5)
     end
@@ -64,7 +63,6 @@ Try Again:"
     @player_turns = 0
     @count = @num_players
     final = 0
-    hands = []
     @players.each do |player|
       if player.hand != nil
         if @count != 1
@@ -82,6 +80,13 @@ Try Again:"
             @players << Player.new(player.chips, player.id, player.hand)
             final += 1
           else #compares hands at the end of the final round
+            find_last_instance
+            hands = []
+            @player_save.each do |player|
+              hands << player.hand
+            end
+            print hands
+            start_round
           end
         else
           winning_round(player)
