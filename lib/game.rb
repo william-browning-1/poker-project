@@ -16,7 +16,7 @@ Try Again:"
 
     puts "Each player starts with 200 chips\n\n"
     starting
-    start_round
+    start_round(1)
   end
 
   def starting
@@ -37,10 +37,17 @@ Try Again:"
     last_instances.values.each do |player|
       @player_save << Player.new(player[:chips], player[:id], nil)
     end
-    @player_save
+    @players = @player_save
   end
 
-  def start_round
+  def start_round(round_number)  #starts each round with new deck
+    if round_number.eql?(1)  #initial round
+      starting
+      print(@players)
+    else
+      find_last_instance  #runs the function to delete un-needed values from @players.
+      print(@players)
+    end
     puts "\nShuffling..."
     @current_deck = Deck.new #new deck for every round
     puts "\nDealing...\n\n" #changes @players back to three players.
@@ -67,7 +74,7 @@ Try Again:"
             puts "\n\n(First Round)\n\n"
             turn(player)
             @player_turns += 1
-          elsif @player_turns.between?(@num_players, (@count * 2) -1)
+          elsif @player_turns.between?(@num_players, (@count * 2) - 1)
             puts "\n\n(Draw Round)\n\n"
             turn(player)
             @player_turns += 1
@@ -78,20 +85,20 @@ Try Again:"
             final += 1
           else #compares hands at the end of the final round
             puts Hand.new(player.hand)
-            start_round
+            start_round(round_number + 1)
           end
         else
           winning_round(player)
-          start_round
+          start_round(round_number + 1)
         end
       end
     end
   end
 
 
-  def winning_round(player)
+  def winning_round(player) #when a player wins a round they win the pot
     puts "\n\nPlayer #{player.id} wins the pot!!!\n\n"
-          player.chips += @pot
+          player.chips = player.chips + @pot
   end
 end
 game_1 = Game.new

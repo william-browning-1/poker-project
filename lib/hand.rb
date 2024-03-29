@@ -5,8 +5,8 @@ class Hand < Deck
   def initialize(cards)
     @cards = cards
 
-    @ranks1 = @cards.map{|card| card.rank}
-    @suits = @cards.map{|card| card.suit}
+    @ranks1 = @cards.map{|card| card.rank} #all ranks in hand
+    @suits = @cards.map{|card| card.suit} #all suits in hand
 
     @rank_integers = @cards
 
@@ -19,12 +19,12 @@ class Hand < Deck
     end
 
     @rank_integers = @rank_integers.select {|card| (card.rank).is_a? Integer}
-    @ranksints = @rank_integers.map{|card| card.rank}
+    @ranksints = @rank_integers.map{|card| card.rank}  #finds the integer values of the ranks for ace, king, queen, jack.
 
     @high_card = @ranksints.max
   end
 
-  def show_hand
+  def show_hand #displays the hand
     @cards = @cards.select {|card| card.rank.is_a? String or card.rank <= 10}
     display = []
     @cards.slice!(0, 5).each do |card|
