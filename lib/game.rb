@@ -24,7 +24,6 @@ Try Again:"
     (0...@num_players).each do |player|
       @players.push(Player.new(200, player + 1, nil)) #hand starts as a nil value.
     end
-    @player_save = []
   end
 
   def find_last_instance  #finds the last time a value was entered for a player.id in @players
@@ -32,10 +31,9 @@ Try Again:"
     last_instances = {}
     @players.reverse.each do |player|
       if !last_instances.key?(player.id)
-        last_instances[player.id] = { chips: player.chips, id: player.id }
+        last_instances[player.id] = { chips: player.chips, id: player.id}
       end
     end
-    puts last_instances
     last_instances.values.each do |player|
       @player_save << Player.new(player[:chips], player[:id], nil)
     end
@@ -51,7 +49,6 @@ Try Again:"
     end
 
     @pot = 0
-
     puts "Initial Bets are 10 chips each:\n"
     @players.each do |player| #create ante game based on number of players
       @pot += 10
@@ -80,12 +77,7 @@ Try Again:"
             @players << Player.new(player.chips, player.id, player.hand)
             final += 1
           else #compares hands at the end of the final round
-            find_last_instance
-            hands = []
-            @player_save.each do |player|
-              hands << player.hand
-            end
-            print hands
+            puts Hand.new(player.hand)
             start_round
           end
         else

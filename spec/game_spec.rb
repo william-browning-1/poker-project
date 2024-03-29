@@ -22,9 +22,25 @@ RSpec.describe Game do
     end
   end
 
-  describe 'eliminate' do
-    it 'eliminates a player when their chips = 0' do
-
+  describe '#find_last_instances' do
+    before(:each) do
+      @players = [
+        Player.new(100, 1, nil),
+        Player.new(200, 2, nil),
+        Player.new(150, 1, nil),
+        Player.new(300, 3, nil),
+        Player.new(250, 2, nil)
+      ]
     end
+
+  xit 'returns the last instance of each player' do
+    expected_result = [
+      Player.new(150, 1, nil),
+      Player.new(250, 2, nil),
+      Player.new(300, 3, nil)
+    ]
+
+    expect(game.find_last_instance).to eq(expected_result)
   end
+end
 end

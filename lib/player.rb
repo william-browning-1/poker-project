@@ -32,10 +32,10 @@ class Player < Hand
       choice = gets.chomp.to_i
       begin
         if choice == 1 #sees bet
-          @players << Player.new(player.chips - @current_bet, player.id, player.hand) #used to continue iterating
+          @players << Player.new(player.chips - @current_bet, player.id, player.hand)#used to continue iterating
           break
         elsif choice == 2 #if player raises raise the inputed value.
-          loop do
+          loop do #error catching
             puts "\nHow much would you like to raise?\n"
             choice = gets.chomp.to_i
             begin
@@ -57,7 +57,7 @@ class Player < Hand
           end
           break
         elsif choice == 3 #if player folds give them a nil hand.
-          @players << Player.new(player.chips, player.id, nil)
+          @players << Player.new(player.chips, player.id, nil) #saves hand as nil so that it doesnt use a turn.
           @count -= 1
           break
         else
