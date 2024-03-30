@@ -43,10 +43,8 @@ Try Again:"
   def start_round(round_number)  #starts each round with new deck
     if round_number.eql?(1)  #initial round
       starting
-      print(@players)
     else
       find_last_instance  #runs the function to delete un-needed values from @players.
-      print(@players)
     end
     puts "\nShuffling..."
     @current_deck = Deck.new #new deck for every round
