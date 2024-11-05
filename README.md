@@ -1,1 +1,1 @@
-# project_1
+# poker game project
